@@ -15,10 +15,10 @@ Question: {question}
 """
 
 
-def ask(question: str):
-    hits = search(question, k=4)
+def ask(question: str, collection: str = "documents"):
+    hits = search(question, k=4, collection=collection)
     context = "\n\n".join(
-        f"[{d.metadata.get('source')} p.{d.metadata.get('page')}]\n{d.page_content}"
+        f"[{d.metadata.get('source')} p.{d.metadata.get('page_label', d.metadata.get('page'))}]\n{d.page_content}"
         for d, _ in hits
     )
     llm = ChatOllama(model="llama3.1", temperature=0)
@@ -26,5 +26,9 @@ def ask(question: str):
 
 
 if __name__ == "__main__":
-    query = " ".join(sys.argv[1:]) or "What was total revenue?"
-    print(ask(query))
+    args = sys.argv[1:]
+    collection = "documents"
+    if args and args[0] in ("documents", "documents_v2"):
+        collection, args = args[0], args[1:]
+    query = " ".join(args) or "What was total revenue?"
+    print(ask(query, collection=collection))

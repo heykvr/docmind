@@ -7,11 +7,11 @@ load_dotenv()
 COLLECTION = "documents"
 DB_URL = os.environ["DB_URL"]
 
-def get_store() -> PGVector:
+def get_store(collection: str = COLLECTION) -> PGVector:
     embeddings = OllamaEmbeddings(model="nomic-embed-text")
     return PGVector(
         embeddings=embeddings,
-        collection_name=COLLECTION,
+        collection_name=collection,
         connection=DB_URL,
         use_jsonb=True,
     )
