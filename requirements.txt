@@ -7,3 +7,8 @@ langchain-text-splitters
 pypdf
 psycopg[binary]
 python-dotenv
+unstructured[pdf]
+boto3
+celery[redis]
+fastapi
+uvicorn[standard]

@@ -38,8 +38,8 @@ def _bbox(el):
     coords = el.metadata.coordinates
     if not coords:
         return None
-    xs = [p[0] for p in coords.points]
-    ys = [p[1] for p in coords.points]
+    xs = [float(p[0]) for p in coords.points]
+    ys = [float(p[1]) for p in coords.points]
     return [min(xs), min(ys), max(xs), max(ys)]
 
 
